@@ -1,10 +1,11 @@
 import _ from "lodash";
 
-// import w from "index.css";
+import indexStyle from "./index.css";
+alert();
+
 
 function component () {
   var element = document.createElement('div');
-
   /* lodash is required for the next line to work */
   element.innerHTML = _.join(['Hello','webpack'], ' ');
 
