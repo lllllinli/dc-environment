@@ -1,7 +1,5 @@
 import _ from "lodash";
 
-import indexStyle from "./index.css";
-alert();
 
 
 function component () {

@@ -9,30 +9,26 @@ const outputRootPath = path.resolve(__dirname, "dist");
 
 var publicPath = 'http://localhost:3000/';
 var hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
+var CleanWebpackPlugin = require('clean-webpack-plugin');
 
 
 const config = {
-  devtool: "source-map",
+  //devtool: "source-map",
   // multi entry
   entry: {
-    // "page1": [
-    //   hotMiddlewareScript,
-    //   `${entryRootPath}/pages/index.js`
-    //
-    // ],
-    // "page1": [
-    //   hotMiddlewareScript,
-    //   `${entryRootPath}/pages/about.js`
-    // ],
-    page1: ['./client/page1', hotMiddlewareScript],
-    page2: ['./client/page2', hotMiddlewareScript],
-    vendors: [ "jquery/dist/jquery.js" , hotMiddlewareScript]
+    "index-page": [
+      `${entryRootPath}/pages/index.js`
+    ],
+    "about-page": [
+      `${entryRootPath}/pages/about.js`
+    ],
+    "vendors": [ "jquery" ]
   },
   output: {
-    filename: './[name]/bundle.js',
-    path: path.resolve(__dirname, './public'),
-    //sourceMapFilename: "[file].map"
-    publicPath: publicPath
+    // 檔名
+    filename: '[name].js',
+    // 位置
+    path: `${outputRootPath}/pages`
   },
   //
   resolve: {
@@ -55,30 +51,27 @@ const config = {
         include: path.join(__dirname, 'src')
       },
       {
-          test: /\.(png|jpg)$/,
-          use: 'url-loader?limit=8192&context=client&name=[path][name].[ext]'
-      }, {
-          test: /\.scss$/,
-          use: [
-              'style-loader',
-              'css-loader?sourceMap',
-              'resolve-url-loader',
-              'sass-loader?sourceMap'
-          ]
+        test: /\.css$/,
+        loader:  ExtractTextPlugin.extract({
+          loader: 'css-loader?importLoaders=1',
+        }),
       }
     ]
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+    new CleanWebpackPlugin(['dist']),
+    new ExtractTextPlugin({
+      filename: "[name].bundle.css",
+      allChunks: true,
+    }),
     new webpack.ProvidePlugin({
 			$                : 'jquery',
 			jQuery           : 'jquery',
 			'windows.jQuery' : 'jquery'
 		})
+    //new webpack.NoErrorsPlugin()
   ]
-
 };
 
 
