@@ -6,6 +6,8 @@ var isDev = process.env.NODE_ENV !== 'production';
 var app = express();
 var port = 3000;
 
+var open = require('open');
+
 app.engine('html', consolidate.ejs);
 app.set('view engine', 'html');
 app.set('views', path.resolve(__dirname, './views'));
@@ -44,11 +46,12 @@ if (isDev) {
             port: 8080
         });
         console.log('App (dev) is going to be running on port 8080 (by browsersync).');
+        open(`http://localhost:${port}`);
     });
 
 } else {
-    app.use(express.static(path.join(__dirname, 'public')));
-    require('./server/routes')(app);
+    app.use(express.static(path.join(__dirname, '../public')));
+    require('./routes')(app);
     app.listen(port, function () {
         console.log('App (production) is now running on port 3000!');
     });

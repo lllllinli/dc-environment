@@ -6,6 +6,7 @@ var express = require('express'),
 var isDev = process.env.NODE_ENV !== 'production';
 var app = express();
 var port = 3000;
+var open = require('open');
 
 app.engine('html', consolidate.ejs);
 app.set('view engine', 'html');
@@ -47,7 +48,7 @@ if (isDev) {
   // });
 
   require('./routes')(app);
-
+  console.log("test");
   // add "reload" to express, see: https://www.npmjs.com/package/reload
   var reload = require('reload');
   var http = require('http');
@@ -57,13 +58,15 @@ if (isDev) {
 
   server.listen(port, function(){
       console.log('App (dev) is now running on port 3000!');
+      open(`http://localhost:${port}`);
   });
 
 } else {
 
-  app.use(express.static(__dirname + '/view'));
-  //Store all HTML files in view folder.
-  app.use(express.static(__dirname + '/script'));
-  //Store all JS and CSS in Scripts folder.
-  app.use('/static', express.static(__dirname + '/public'));
+    // static assets served by express.static() for production
+    app.use(express.static(path.join(__dirname, '../public')));
+    require('./routes')(app);
+    app.listen(port, function () {
+        console.log('App (production) is now running on port 3000!');
+    });
 }

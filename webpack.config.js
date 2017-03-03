@@ -7,27 +7,18 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const entryRootPath = path.resolve(__dirname, "src");
 const outputRootPath = path.resolve(__dirname, "dist");
 
-var publicPath = 'http://localhost:3000/';
-var hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
+const publicPath = 'http://localhost:3000/';
+const hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
 
 
 const config = {
   devtool: "source-map",
   // multi entry
   entry: {
-    // "page1": [
-    //   hotMiddlewareScript,
-    //   `${entryRootPath}/pages/index.js`
-    //
-    // ],
-    // "page1": [
-    //   hotMiddlewareScript,
-    //   `${entryRootPath}/pages/about.js`
-    // ],
     page1: ['./client/page1', hotMiddlewareScript],
-    page2: ['./client/page2', hotMiddlewareScript],
     vendors: [ "jquery/dist/jquery.js" , hotMiddlewareScript]
   },
+
   output: {
     filename: './[name]/bundle.js',
     path: path.resolve(__dirname, './public'),
