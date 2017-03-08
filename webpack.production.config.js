@@ -3,38 +3,44 @@
 var path = require("path");
 var webpack = require("webpack");
 
-var CleanWebpackPlugin = require('clean-webpack-plugin');
+var CleanWebpackPlugin = require("clean-webpack-plugin");
 // import the Extract Text Plugin
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-var optionsDevtool = 'source-map';
+var optionsDevtool = "source-map";
 var optionsEntry = {
-  page1: ['./client/page1'],
-  vendors: ['jquery']
+  'index-page': ['./client/index-page'],
+  vendors: ["jquery", "bootstrap"]
 };
 var optionsOutput = {
-  filename: './[name]/bundle.js',
-  path: path.resolve(__dirname, './public'),
+  filename: "./[name]/bundle.js",
+  path: path.resolve(__dirname, "./public"),
   //sourceMapFilename: "[file].map"
-  publicPath: '/'
+  publicPath: "/"
 };
 var optionsResolve = {
   alias: {
-    "pages": path.join(__dirname, 'client')
+    "client": path.join(__dirname, "client")
   },
-  modules: [ 'node_modules' ],
-  extensions: [
-    '.json',
-    '.js', '.jsx',
-    '.css', '.scss'
-  ]
+  modules: ["node_modules"],
+  extensions: [".js", ".jsx", ".css", ".scss"]
 };
 
 var optionsLoaders = {
   rules: [
     {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: "babel-loader",
+      include: path.join(__dirname, 'client')
+    },
+    {
         test: /\.(png|jpg)$/,
         use: 'url-loader?limit=8192&context=client&name=[path][name].[ext]'
+    },
+    {
+        test: /\.(woff|woff2|ttf|eot|svg)$/,
+        use: 'url-loader'
     },
     {
       test: /\.scss$/,
@@ -47,7 +53,7 @@ var optionsLoaders = {
 };
 
 var optionsPlugins = [
-  new CleanWebpackPlugin(['public']),
+  new CleanWebpackPlugin(["public"]),
   new ExtractTextPlugin({
       filename: './[name]/index.css',
       allChunks: true

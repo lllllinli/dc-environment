@@ -19,12 +19,12 @@ app.locals.reload = true;
 
 
 if (isDev) {
-  var webpack = require('webpack'),
+  let webpack = require('webpack'),
       webpackDevMiddleware = require('webpack-dev-middleware'),
       webpackHotMiddleware = require('webpack-hot-middleware'),
       webpackDevConfig = require('../webpack.config.js');
 
-  var compiler = webpack(webpackDevConfig);
+  let compiler = webpack(webpackDevConfig);
 
   // attach to the compiler & the server
   app.use(webpackDevMiddleware(compiler, {
@@ -38,22 +38,14 @@ if (isDev) {
   }));
   app.use(webpackHotMiddleware(compiler));
 
-  // app.get('/', function (req, res) {
-  //   // res.send('Hello World!');
-  //   res.sendFile(path.join(__dirname+ '/view/pages/index.html' ));
-  // });
-  //
-  // app.listen(3000, function () {
-  //   console.log('Example app listening on port 3000!');
-  // });
-
   require('./routes')(app);
-  console.log("test");
   // add "reload" to express, see: https://www.npmjs.com/package/reload
-  var reload = require('reload');
-  var http = require('http');
+  let reload = require('reload');
+  let http = require('http');
 
-  var server = http.createServer(app);
+  let server = http.createServer(app);
+
+
   reload(server, app);
 
   server.listen(port, function(){
@@ -62,7 +54,6 @@ if (isDev) {
   });
 
 } else {
-
     // static assets served by express.static() for production
     app.use(express.static(path.join(__dirname, '../public')));
     require('./routes')(app);

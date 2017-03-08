@@ -4,8 +4,6 @@ const webpack = require("webpack");
 // import the Extract Text Plugin
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const entryRootPath = path.resolve(__dirname, "src");
-const outputRootPath = path.resolve(__dirname, "dist");
 
 const publicPath = 'http://localhost:3000/';
 const hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
@@ -15,40 +13,47 @@ const config = {
   devtool: "source-map",
   // multi entry
   entry: {
-    page1: ['./client/page1', hotMiddlewareScript],
-    vendors: [ "jquery/dist/jquery.js" , hotMiddlewareScript]
+    'index-page': ['./client/index-page', hotMiddlewareScript],
+    vendors: [ "jquery", "bootstrap", hotMiddlewareScript]
   },
 
   output: {
     filename: './[name]/bundle.js',
     path: path.resolve(__dirname, './public'),
-    //sourceMapFilename: "[file].map"
     publicPath: publicPath
   },
   //
   resolve: {
     alias: {
-      "pages": path.join(__dirname, "src", "pages")
+      client: path.join(__dirname, "client")
     },
-    modules: [ "node_modules" ],
-    extensions: [
-      ".json",
-      ".js", ".jsx",
-      ".css", ".scss"
-    ]
+    modules: ["node_modules"],
+    extensions: [".js", ".jsx", ".css", ".scss"]
   },
   // loaders
   module: {
     rules: [
+      // {
+      //   enforce: "pre",
+      //   test: /\.js$/,
+      //   exclude: /node_modules/,
+      //   loader: "eslint-loader",
+      // },
       {
         test: /\.js$/,
-        exclude: /node_modules/, loader: "babel-loader",
-        include: path.join(__dirname, 'src')
+        exclude: /node_modules/,
+        use: "babel-loader",
+        include: path.join(__dirname, 'client')
       },
       {
           test: /\.(png|jpg)$/,
           use: 'url-loader?limit=8192&context=client&name=[path][name].[ext]'
-      }, {
+      },
+      {
+          test: /\.(woff|woff2|ttf|eot|svg)$/,
+          use: 'url-loader'
+      },
+      {
           test: /\.scss$/,
           use: [
               'style-loader',

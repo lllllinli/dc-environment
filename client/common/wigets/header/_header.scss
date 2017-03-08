@@ -1,0 +1,84 @@
+.pj-dc-header {
+  border-bottom: 1px solid #333;
+
+  .pj-dc-navbar-nav {
+    margin-left: 50px;
+
+    .pj-dc-navbar-nav-li {
+
+      .pj-dc-base-link {
+        font-weight: 300;
+        color: #333;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        position: relative;
+
+        .line {
+          position: absolute;
+          bottom: 15px;
+          height: 1px;
+          width: 27px;
+          background-color: #333;
+        }
+
+        &:hover {
+          background-color: #fff;
+          color: #929292;
+          .line {
+            position: absolute;
+            bottom: 15px;
+            height: 1px;
+            width: 27px;
+            background-color: #929292;
+          }
+        }
+      }
+
+      .pj-dc-login-link {
+        color: #0071BC;
+        font-weight: 300;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        position: relative;
+
+        &:hover {
+          background-color: #fff;
+        }
+      }
+
+    }
+
+    .active {
+      a {
+        font-weight: 300;
+        padding-top: 25px;
+        padding-bottom: 25px;
+        position: relative;
+        background-color: #fff;
+        color: #333;
+
+        .line {
+          position: absolute;
+          bottom: 15px;
+          height: 2px;
+          width: 27px;
+          background-color: #333;
+        }
+      }
+    }
+
+    .pj-dc-dropdown {
+      float: left;
+      border: 0px solid #333;
+      margin-top: 17px;
+    }
+
+    .pj-dc-avatar {
+      width: 35px;
+      float: right;
+      display: block;
+      border: 1px solid #333;
+      margin-top: 17px;
+    }
+  }
+}
